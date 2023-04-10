@@ -1,15 +1,17 @@
-import './App.css';
 import react, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ethers } from 'ethers';
 import artifact from './artifacts/contracts/Staking.sol/Staking.json'
 
 import NavBar from './components/NavBar'
+import Home from './pages/home'
+import Staking from './pages/staking'
 import StakeModel from './components/StakeModel'
 import { Bank, PiggyBank, Coin } from 'react-bootstrap-icons'
 
 const CONTRACT_ADDRESS = '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
 
-function App() {
+export default function App() {
   // general
   const [provider, setProvider] = useState(undefined)
   const [signer, setSigner] = useState(undefined)
@@ -120,125 +122,14 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div>
-        <NavBar
-          isConnected={isConnected}
-          connect={connectAndLoad}
-        />
-      </div>
-
-      <div className="appBody">
-        <div className="marketContainer">
-          <div className="subContainer">
-            <span>
-              <img className="logoImg" src="eth-logo.webp"/>
-            </span>
-            <span className="marketHeader">Ethereum Market APY</span>
-          </div>
-
-          <div className="row">
-            <div className="col-md-4">
-              <div onClick={() => openStakingModel(30, '2%')} className="marketOption">
-                <div className="glyphContainer hoverButton">
-                  <span className="glyph">
-                    <Coin />
-                  </span>
-                </div>
-                <div className="optionData">
-                  <span>1 Month </span>
-                  <span className="optionPercent">2%</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div onClick={() => openStakingModel(90, '5%')} className="marketOption">
-                <div className="glyphContainer hoverButton">
-                  <span className="glyph">
-                    <Coin />
-                  </span>
-                </div>
-                <div className="optionData">
-                  <span>3 Months </span>
-                  <span className="optionPercent">5%</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div onClick={() => openStakingModel(180, '10%')} className="marketOption">
-                <div className="glyphContainer hoverButton">
-                  <span className="glyph">
-                    <Coin />
-                  </span>
-                </div>
-                <div className="optionData">
-                  <span>6 Months </span>
-                  <span className="optionPercent">10%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="assetContainer">
-          <div className="subContainer">
-            <span className="marketHeader">Staked Assets</span>
-          </div>
-          <div>
-            <div className="row columnHeaders">
-              <div className="col-md-2">Assets</div>
-              <div className="col-md-2">APY</div>
-              <div className="col-md-2">Staked</div>
-              <div className="col-md-2">Interest</div>
-              <div className="col-md-2">Days Remaining</div>
-              <div className="col-md-2"></div>
-            </div>
-          </div>
-          <br />
-          {assets.length > 0 && assets.map((a, idx) => (
-            <div className="row">
-              <div className="col-md-2">
-                <span>
-                  <img className="stakedLogoImg" src="eth-logo.webp" />
-                </span>
-              </div>
-              <div className="col-md-2">
-                {a.percentInterest} %
-              </div>
-              <div className="col-md-2">
-                {a.etherStaked}
-              </div>
-              <div className="col-md-2">
-                {a.etherInterest}
-              </div>
-              <div className="col-md-2">
-                {a.daysRemaining}
-              </div>
-              <div className="col-md-2">
-                {a.open ? (
-                  <div onClick={() => withdraw(a.positionId)} className="orangeMiniButton">Withdraw</div>
-                ) : (
-                  <span>closed</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      {showStakeModel && (
-        <StakeModel
-          onClose={() => setShowStakeModel(false)}
-          stakingLength={stakingLength}
-          stakingPercent={stakingPercent}
-          amount={amount}
-          setAmount={setAmount}
-          stakeEther={stakeEther}
-        />
-      )}
-    </div>
+    <>
+      <NavBar 
+        isConnected={isConnected}
+        connect={connectAndLoad}/>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/staking" element={<Staking/>}/>
+      </Routes>
+    </>
   );
 }
-
-export default App;
