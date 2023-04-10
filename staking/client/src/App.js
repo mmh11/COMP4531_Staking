@@ -46,6 +46,14 @@ export default function App() {
     onLoad()
   }, [])
 
+  useEffect(() => {
+    if (!showStakeModel) {
+      //  clear the amount whenever the stake model is closed
+      // console.log('stake model is closed')
+      setAmount(0)
+    }
+  }, [showStakeModel])
+
   const isConnected = () => signer !== undefined
 
   const getSigner = async () => {
@@ -111,8 +119,9 @@ export default function App() {
       const data = { value: wei }
       contract.connect(signer).stakeEther(stakingLength, data)
     } else {
-      console.log('Amount is missing')
-      window.alert('Amount should larger than 0!')
+      // console.log('Amount is missing')
+      const text = 'Amount should larger than 0! Current input amount is ' + amount
+      window.alert(text)
 
     }
   }
