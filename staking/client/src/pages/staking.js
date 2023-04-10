@@ -3,7 +3,7 @@ import react, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import artifact from '../artifacts/contracts/Staking.sol/Staking.json'
 import StakeModel from '../components/StakeModel'
-import { Bank, PiggyBank, Coin } from 'react-bootstrap-icons'
+import { Coin } from 'react-bootstrap-icons'
 
 
 const Staking = props => {
