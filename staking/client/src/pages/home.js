@@ -4,7 +4,7 @@ export default function Home() {
     return(
         <div>
             <div style={{marginLeft:"8VW",marginTop:"45VH"}}>
-                <img src={require("../images/logoName.png")}></img>
+                <img style={{width:"35VW"}} src={require("../images/logoName.png")}></img>
             </div>
             <h1 style={{ 
                 fontSize: "1.5VW", 
