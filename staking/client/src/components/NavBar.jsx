@@ -69,32 +69,25 @@ const NavBar = props => {
                             style={textButtonStyle}>
                             <p>Staking</p>
                         </Button>
-                        <Button 
-                            component={Link} 
-                            to="/staking" 
-                            sx={muiButtonSX} 
-                            disableRipple 
-                            style={textButtonStyle}>
-                            <p>Staking</p>
-                        </Button>
+                        {props.isConnected() ? (
+                            <Button 
+                                sx={muiButtonSX} 
+                                disableRipple 
+                                style={textButtonStyle}>
+                                <p>Connected</p>
+                            </Button>
+                        ) : (
+                            <Button
+                                sx={muiButtonSX} 
+                                disableRipple 
+                                style={textButtonStyle}
+                                onClick={() => props.connect()}>
+                                <p>Connect Wallet</p>
+                            </Button>
+                        )}
                     </Grid>
                 </Toolbar>
             </AppBar>
-            {/* <div className="navBar">
-                <div className="navButton">Markets</div>
-                <div className="navButton">Assets</div>
-                {props.isConnected() ? (
-                    <div className="connectButton">
-                        Connected
-                    </div>
-                ) : (
-                    <div 
-                    onClick={() => props.connect()}
-                    className="connectButton">
-                        Connect Wallet
-                    </div>
-                )}
-            </div> */}
         </>
     )
 }

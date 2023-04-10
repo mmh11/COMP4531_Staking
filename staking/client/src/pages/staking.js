@@ -5,118 +5,8 @@ import artifact from '../artifacts/contracts/Staking.sol/Staking.json'
 import StakeModel from '../components/StakeModel'
 import { Bank, PiggyBank, Coin } from 'react-bootstrap-icons'
 
-const CONTRACT_ADDRESS = '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
 
-function App() {
-  // general
-  const [provider, setProvider] = useState(undefined)
-  const [signer, setSigner] = useState(undefined)
-  const [contract, setContract] = useState(undefined)
-  const [signerAddress, setSignerAddress] = useState(undefined)
-
-  // assets
-  const [assetIds, setAssetIds] = useState([])
-  const [assets, setAssets] = useState([])
-
-  // staking
-  const [showStakeModel, setShowStakeModel] = useState(false)
-  const [stakingLength, setStakingLength] = useState(undefined)
-  const [stakingPercent, setStakingPercent] = useState(undefined)
-  const [amount, setAmount] = useState(0)
-
-  // helpers
-  const toWei = ether => ethers.parseEther(ether)
-  const toEther = wei => ethers.formatEther(wei)
-
-  useEffect(() => {
-    const onLoad = async () => {
-      const provider = await new ethers.BrowserProvider(window.ethereum)
-      setProvider(provider)
-
-      const contract = await new ethers.Contract(
-        CONTRACT_ADDRESS,
-        artifact.abi
-      )
-      setContract(contract)
-    }
-    onLoad()
-  }, [])
-
-  const isConnected = () => signer !== undefined
-
-  const getSigner = async () => {
-    provider.send("eth_requestAccounts", [])
-    const signer = provider.getSigner()
-    return signer
-  }
-
-  const getAssetIds = async (address, signer) => {
-    const assetIds = await contract.connect(signer).getPositionIdsForAddress(address)
-    return assetIds
-  }
-
-  const calcDaysRemaining = (unlockDate) => {
-    const timeNow = Date.now() / 1000
-    const secondsRemaining = unlockDate - timeNow
-    return Math.max( (secondsRemaining / 60 / 60 / 24).toFixed(0), 0)
-  }
-
-  const getAssets = async (ids, signer) => {
-    const queriedAssets = await Promise.all(
-      ids.map(id => contract.connect(signer).getPositionById(id))
-    )
-
-    queriedAssets.map(async asset => {
-      const parsedAsset = {
-        positionId: asset.positionId,
-        percentInterest: Number(asset.percentInterest) / 100,
-        daysRemaining: calcDaysRemaining( Number(asset.unlockDate) ),
-        etherInterest: toEther(asset.weiInterest),
-        etherStaked: toEther(asset.weiStaked),
-        open: asset.open,
-      }
-
-      setAssets(prev => [...prev, parsedAsset])
-    })
-  }
-
-  const connectAndLoad = async () => {
-    const signer = await getSigner(provider)
-    setSigner(signer)
-
-    const signerAddress = await signer.getAddress()
-    setSignerAddress(signerAddress)
-
-    const assetIds = await getAssetIds(signerAddress, signer)
-    setAssetIds(assetIds)
-
-    getAssets(assetIds, signer)
-  }
-
-  const openStakingModel = (stakingLength, stakingPercent) => {
-    setShowStakeModel(true)
-    setStakingLength(stakingLength)
-    setStakingPercent(stakingPercent)
-  }
-
-  const stakeEther = () => {
-
-    console.log('amount: ', amount)
-    if (amount && amount > 0 ) {
-      const wei = toWei(amount)
-      const data = { value: wei }
-      contract.connect(signer).stakeEther(stakingLength, data)
-    } else {
-      console.log('Amount is missing')
-      window.alert('Amount should larger than 0!')
-
-    }
-  }
-
-  const withdraw = positionId => {
-    contract.connect(signer).closePosition(positionId)
-  }
-
+const Staking = props => {
   return (
     <div className="App">
       <div className="appBody">
@@ -130,7 +20,7 @@ function App() {
 
           <div className="row">
             <div className="col-md-4">
-              <div onClick={() => openStakingModel(30, '2%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(30, '2%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -144,7 +34,7 @@ function App() {
             </div>
 
             <div className="col-md-4">
-              <div onClick={() => openStakingModel(90, '5%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(90, '5%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -158,7 +48,7 @@ function App() {
             </div>
 
             <div className="col-md-4">
-              <div onClick={() => openStakingModel(180, '10%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(180, '10%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -188,7 +78,7 @@ function App() {
             </div>
           </div>
           <br />
-          {assets.length > 0 && assets.map((a, idx) => (
+          {props.assets.length > 0 && props.assets.map((a, idx) => (
             <div className="row">
               <div className="col-md-2">
                 <span>
@@ -209,7 +99,7 @@ function App() {
               </div>
               <div className="col-md-2">
                 {a.open ? (
-                  <div onClick={() => withdraw(a.positionId)} className="orangeMiniButton">Withdraw</div>
+                  <div onClick={() => props.withdraw(a.positionId)} className="orangeMiniButton">Withdraw</div>
                 ) : (
                   <span>closed</span>
                 )}
@@ -218,18 +108,18 @@ function App() {
           ))}
         </div>
       </div>
-      {showStakeModel && (
+      {props.showStakeModel && (
         <StakeModel
-          onClose={() => setShowStakeModel(false)}
-          stakingLength={stakingLength}
-          stakingPercent={stakingPercent}
-          amount={amount}
-          setAmount={setAmount}
-          stakeEther={stakeEther}
+          onClose={() => props.setShowStakeModel(false)}
+          stakingLength={props.stakingLength}
+          stakingPercent={props.stakingPercent}
+          amount={props.amount}
+          setAmount={props.setAmount}
+          stakeEther={props.stakeEther}
         />
       )}
     </div>
   );
 }
 
-export default App;
+export default Staking;
