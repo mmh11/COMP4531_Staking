@@ -26,9 +26,9 @@ contract Staking{
         owner = msg.sender;
         currentPositionId = 0;
 
-        tiers[30] = 200;
-        tiers[90] = 500;
-        tiers[180] = 1000;
+        tiers[30] = 500;
+        tiers[90] = 1000;
+        tiers[180] = 2000;
 
         lockPeriods.push(30);
         lockPeriods.push(90);
@@ -84,6 +84,15 @@ contract Staking{
         } else{
             payable(msg.sender).call{value: positions[positionId].weiStaked}("");
         }
+    }
+
+    function modifyLockPeriods(uint numDays, uint basisPoints) external {
+        tiers[numDays] = basisPoints;
+        lockPeriods.push(numDays);
+    }
+
+    function changeUnlockDate(uint positionId, uint newUnlockDate) external {
+        positions[positionId].unlockDate = newUnlockDate;
     }
 
 }
