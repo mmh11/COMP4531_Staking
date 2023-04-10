@@ -15,12 +15,12 @@ const Staking = props => {
             <span>
               <img className="logoImg" src={require("../images/Ethereum_logo_webp.webp")}/>
             </span>
-            <span className="marketHeader">Ethereum Market APY</span>
+            <span className="marketHeader">Ethereum Market APR</span>
           </div>
 
           <div className="row">
             <div className="col-md-4">
-              <div onClick={() => props.openStakingModel(30, '2%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(30, '5%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -28,13 +28,13 @@ const Staking = props => {
                 </div>
                 <div className="optionData">
                   <span>1 Month </span>
-                  <span className="optionPercent">2%</span>
+                  <span className="optionPercent">5%</span>
                 </div>
               </div>
             </div>
 
             <div className="col-md-4">
-              <div onClick={() => props.openStakingModel(90, '5%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(90, '10%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -42,13 +42,13 @@ const Staking = props => {
                 </div>
                 <div className="optionData">
                   <span>3 Months </span>
-                  <span className="optionPercent">5%</span>
+                  <span className="optionPercent">10%</span>
                 </div>
               </div>
             </div>
 
             <div className="col-md-4">
-              <div onClick={() => props.openStakingModel(180, '10%')} className="marketOption">
+              <div onClick={() => props.openStakingModel(180, '20%')} className="marketOption">
                 <div className="glyphContainer hoverButton">
                   <span className="glyph">
                     <Coin />
@@ -56,7 +56,7 @@ const Staking = props => {
                 </div>
                 <div className="optionData">
                   <span>6 Months </span>
-                  <span className="optionPercent">10%</span>
+                  <span className="optionPercent">20%</span>
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@ const Staking = props => {
             <div className="row">
               <div className="col-md-2">
                 <span>
-                  <img className="stakedLogoImg" src="eth-logo.webp" />
+                    <img className="logoImg" src={require("../images/Ethereum_logo_webp.webp")}/>
                 </span>
               </div>
               <div className="col-md-2">
