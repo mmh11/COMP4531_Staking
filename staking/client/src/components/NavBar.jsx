@@ -6,7 +6,8 @@ import Logo from "../images/logo.png"
 const NavBar = props => {
     const appbarStyle = {
         background: "transparent", 
-        boxShadow: "none"
+        boxShadow: "none",
+        height: "10VH"
     };
     const buttonStyle = {
         maxWidth:"300px",

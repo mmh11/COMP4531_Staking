@@ -2,7 +2,7 @@ import react, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ethers } from 'ethers';
 import artifact from './artifacts/contracts/Staking.sol/Staking.json'
-
+import Background from "./images/background.jpg"
 import NavBar from './components/NavBar'
 import Home from './pages/home'
 import Staking from './pages/staking'
@@ -122,14 +122,32 @@ export default function App() {
   }
 
   return (
-    <>
+    <div style={{ 
+      backgroundImage: `url(${Background})`,
+      height: "100vh",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover"
+      }}>
       <NavBar 
         isConnected={isConnected}
         connect={connectAndLoad}/>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/staking" element={<Staking/>}/>
+        <Route path="/staking" element={
+          <Staking
+            withdraw={withdraw}
+            openStakingModel={openStakingModel}
+            setShowStakeModel={setShowStakeModel}
+            stakingLength={stakingLength}
+            stakingPercent={stakingPercent}
+            amount={amount}
+            setAmount={setAmount}
+            stakeEther={stakeEther}
+            assets={assets}
+          />
+        }/>
       </Routes>
-    </>
+    </div>
   );
 }
