@@ -14,7 +14,7 @@ const StakeModel = props => {
       <div className="modal-class" onClick={props.onClose}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <div className="modal-body">
-            <h2 className="titleHeader">Stake Ether</h2>
+            <h2 className="titleHeader">Stake ETH</h2>
 
             <div className="row">
               <div className="col-md-9 fieldContainer">
