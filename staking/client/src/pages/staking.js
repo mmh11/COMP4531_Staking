@@ -13,7 +13,7 @@ const Staking = props => {
         <div className="marketContainer">
           <div className="subContainer">
             <span>
-              <img className="logoImg" src="eth-logo.webp"/>
+              <img className="logoImg" src={require("../images/Ethereum_logo_webp.webp")}/>
             </span>
             <span className="marketHeader">Ethereum Market APY</span>
           </div>
