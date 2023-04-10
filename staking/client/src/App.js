@@ -137,6 +137,7 @@ export default function App() {
         <Route path="/staking" element={
           <Staking
             withdraw={withdraw}
+            showStakeModel={showStakeModel}
             openStakingModel={openStakingModel}
             setShowStakeModel={setShowStakeModel}
             stakingLength={stakingLength}
