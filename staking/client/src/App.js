@@ -9,7 +9,7 @@ import Staking from './pages/staking'
 import StakeModel from './components/StakeModel'
 import { Bank, PiggyBank, Coin } from 'react-bootstrap-icons'
 
-const CONTRACT_ADDRESS = '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
+const CONTRACT_ADDRESS = '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82'
 
 export default function App() {
   // general
@@ -45,14 +45,6 @@ export default function App() {
     }
     onLoad()
   }, [])
-
-  useEffect(() => {
-    if (!showStakeModel) {
-      //  clear the amount whenever the stake model is closed
-      // console.log('stake model is closed')
-      setAmount(0)
-    }
-  }, [showStakeModel])
 
   const isConnected = () => signer !== undefined
 
@@ -119,10 +111,9 @@ export default function App() {
       const data = { value: wei }
       contract.connect(signer).stakeEther(stakingLength, data)
     } else {
-      // console.log('Amount is missing')
-      const text = 'Amount should larger than 0! Current input amount is ' + amount
-      // console.log(text)
-      window.alert(text)
+      console.log('Amount is missing')
+      window.alert('Amount should larger than 0!')
+
     }
   }
 
