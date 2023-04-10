@@ -1,7 +1,9 @@
 .App {
-  background-color: #fff;
+  background-color: #f6f7f9;
   text-align: center;
   min-height: 100vh; /* required for full page background */
+  background-repeat: "no-repeat";
+  background-size: "cover"
 }
 
 #root {
