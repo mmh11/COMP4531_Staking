@@ -102,9 +102,17 @@ function App() {
   }
 
   const stakeEther = () => {
-    const wei = toWei(amount)
-    const data = { value: wei }
-    contract.connect(signer).stakeEther(stakingLength, data)
+
+    console.log('amount: ', amount)
+    if (amount && amount > 0 ) {
+      const wei = toWei(amount)
+      const data = { value: wei }
+      contract.connect(signer).stakeEther(stakingLength, data)
+    } else {
+      console.log('Amount is missing')
+      window.alert('Amount should larger than 0!')
+
+    }
   }
 
   const withdraw = positionId => {
