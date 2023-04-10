@@ -70,7 +70,7 @@ const Staking = props => {
           <div>
             <div className="row columnHeaders">
               <div className="col-md-2">Assets</div>
-              <div className="col-md-2">APY</div>
+              <div className="col-md-2">APR</div>
               <div className="col-md-2">Staked</div>
               <div className="col-md-2">Interest</div>
               <div className="col-md-2">Days Remaining</div>
