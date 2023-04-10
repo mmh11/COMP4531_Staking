@@ -7,11 +7,12 @@ const NavBar = props => {
     const appbarStyle = {
         background: "transparent", 
         boxShadow: "none",
-        height: "10VH"
+        height: "10VH",
     };
     const buttonStyle = {
         maxWidth:"300px",
         marginLeft:"8VW",
+        marginTop: "4VH"
     };
     const muiButtonSX = {
         "&:hover": { 
@@ -24,7 +25,7 @@ const NavBar = props => {
         marginLeft:"3VW",
         color: "#171717",
         fontSize: "0.9VW",
-        marginTop:"0.5VH"
+        marginTop:"4VH"
     };
     const imageStyle ={
         width: "100%", 
@@ -34,14 +35,6 @@ const NavBar = props => {
         whiteSpace: "nowrap",
         marginRight: "8VW",
         display: "inline-flex"
-    }
-    const gridStyle2 = {
-        display: "inline-flex"
-    }
-    const nameDivStyle = {
-        alignSelf: "center",
-        color: "#f30987",
-        fontSize: "1.5VW"
     }
 
     return (
