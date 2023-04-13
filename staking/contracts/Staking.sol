@@ -4,95 +4,90 @@ contract Staking{
     address public owner;
 
     struct Position {
-        uint positionId;
-        address walletAddress;
-        uint createdDate;
+        uint posId;
+        address wallet;
+        uint creatDate;
         uint unlockDate;
-        uint percentInterest;
-        uint weiStaked;
-        uint weiInterest;
-        bool open;
+        uint interest;
+        uint stakeAmount;
+        uint stakeInterest;
+        bool start;
     }
 
     Position position;
 
-    uint public currentPositionId;
+    uint public currentposId;
     mapping(uint => Position) public positions;
-    mapping(address => uint[]) public positionIdsByAddress;
-    mapping(uint => uint) public tiers;
-    uint[] public lockPeriods;
+    mapping(address => uint[]) public addressposId;
+    mapping(uint => uint) public stakingPeriod;
+    uint[] public lock;
 
     constructor() payable {
         owner = msg.sender;
-        currentPositionId = 0;
-
-        tiers[30] = 500;
-        tiers[90] = 1000;
-        tiers[180] = 2000;
-
-        lockPeriods.push(30);
-        lockPeriods.push(90);
-        lockPeriods.push(180);
+        currentposId = 0;
+        stakingPeriod[30] = 500;
+        lock.push(30);
+        stakingPeriod[90] = 1000;
+        lock.push(90);
+        stakingPeriod[180] = 2000;
+        lock.push(180);
     }
 
-    function stakeEther(uint numDays) external payable {
-        positions[currentPositionId] = Position(
-            currentPositionId,
+    function stakeEther(uint day) external payable {
+        positions[currentposId] = Position(
+            currentposId,
             msg.sender,
             block.timestamp,
-            block.timestamp + (numDays * 1 days),
-            tiers[numDays],
+            block.timestamp + (day * 1 days),
+            stakingPeriod[day],
             msg.value,
-            calculateInterest(tiers[numDays], numDays, msg.value),
+            calInterest(stakingPeriod[day], msg.value),
             true
         );
 
-        positionIdsByAddress[msg.sender].push(currentPositionId);
-        currentPositionId += 1;
+        addressposId[msg.sender].push(currentposId);
+        currentposId += 1;
 
     }
 
-    function calculateInterest(uint basisPoints, uint numDays, uint weiAmount) private pure returns(uint) {
-        return basisPoints * weiAmount / 10000;
+    function calInterest(uint points, uint weiAmount) private pure returns(uint) {
+        return points * weiAmount / 10000;
     }
 
     function getLockPeriods() external view returns(uint[] memory){
-        return lockPeriods;
+        return lock;
     }
 
-    function getInterestRate(uint numDays) external view returns(uint){
-        return tiers[numDays];
+    function getInterest(uint day) external view returns(uint){
+        return stakingPeriod[day];
     }
 
-    function getPositionById(uint positionId) external view returns(Position memory){
-        return positions[positionId];
+    function getPos(uint posId) external view returns(Position memory){
+        return positions[posId];
     }
 
-    function getPositionIdsForAddress(address walletAddress) external view returns(uint[] memory){
-        return positionIdsByAddress[walletAddress];
+    function getPosAddress(address wallet) external view returns(uint[] memory){
+        return addressposId[wallet];
     }
 
-    function closePosition(uint positionId) external {
-        require(positions[positionId].walletAddress == msg.sender, "Owner only");
-        require(positions[positionId].open == true, "Position close");
+    function closePos(uint posId) external {
+        positions[posId].start = false;
 
-        positions[positionId].open = false;
-
-        if(block.timestamp > positions[positionId].unlockDate){
-            uint amount = positions[positionId].weiStaked + positions[positionId].weiInterest;
+        if(block.timestamp > positions[posId].unlockDate){
+            uint amount = positions[posId].stakeAmount + positions[posId].stakeInterest;
             payable(msg.sender).call{value: amount}("");
         } else{
-            payable(msg.sender).call{value: positions[positionId].weiStaked}("");
+            payable(msg.sender).call{value: positions[posId].stakeAmount}("");
         }
     }
 
-    function modifyLockPeriods(uint numDays, uint basisPoints) external {
-        tiers[numDays] = basisPoints;
-        lockPeriods.push(numDays);
+    function modifyLock(uint day, uint points) external {
+        stakingPeriod[day] = points;
+        lock.push(day);
     }
 
-    function changeUnlockDate(uint positionId, uint newUnlockDate) external {
-        positions[positionId].unlockDate = newUnlockDate;
+    function changeUnlock(uint posId, uint newUnlockDate) external {
+        positions[posId].unlockDate = newUnlockDate;
     }
 
 }
