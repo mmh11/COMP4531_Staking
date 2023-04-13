@@ -1,7 +1,4 @@
 import './App.css';
-import react, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import artifact from '../artifacts/contracts/Staking.sol/Staking.json'
 import StakeModel from '../components/StakeModel'
 import { Coin } from 'react-bootstrap-icons'
 
@@ -71,9 +68,9 @@ const Staking = props => {
             <div className="row columnHeaders">
               <div className="col-md-2">Assets</div>
               <div className="col-md-2">APR</div>
-              <div className="col-md-2">Staked</div>
+              <div className="col-md-2">Staked ETH</div>
               <div className="col-md-2">Interest</div>
-              <div className="col-md-2">Days Remaining</div>
+              <div className="col-md-2">Remaining Days</div>
               <div className="col-md-2"></div>
             </div>
           </div>
@@ -86,7 +83,7 @@ const Staking = props => {
                 </span>
               </div>
               <div className="col-md-2">
-                {a.percentInterest} %
+                {a.interest} %
               </div>
               <div className="col-md-2">
                 {a.etherStaked}
@@ -98,8 +95,8 @@ const Staking = props => {
                 {a.daysRemaining}
               </div>
               <div className="col-md-2">
-                {a.open ? (
-                  <div onClick={() => props.withdraw(a.positionId)} className="orangeMiniButton">Withdraw</div>
+                {a.start ? (
+                  <div onClick={() => props.withdraw(a.posId)} className="orangeMiniButton">Withdraw</div>
                 ) : (
                   <span>closed</span>
                 )}
