@@ -56,7 +56,7 @@ const StakeModel = props => {
             </div>
             <br/>
             <br/>
-            <h6>{stakingLength} days @ {stakingPercent} APY</h6>
+            <h6 style={{color:"#ff9900", fontWeight:"bold"}}>{stakingLength} days @ {stakingPercent} APY</h6>
             <br/>
             <Button 
               variant="contained" 
