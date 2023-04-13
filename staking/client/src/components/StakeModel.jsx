@@ -44,12 +44,13 @@ const StakeModel = props => {
           <div style={diaLogDivStyle}>
             <h3>Stake ETH</h3>
             <br/>
-            <div style={{display:"inline-flex", alignItems:"center"}}>
+            <div style={{display:"inline-flex", alignItems:"center", justifyContent:"center"}}>
               <TextField 
                 sx={textfieldSXStyle}
                 id="outlined-basic" 
                 variant="outlined"
                 type='number'
+                style={{width:"40%"}}
                 onChange={e => props.setAmount(e.target.value)}/>
                 <p style={{marginBottom: 0}}>&nbsp;&nbsp;&nbsp;ETH</p>
             </div>
