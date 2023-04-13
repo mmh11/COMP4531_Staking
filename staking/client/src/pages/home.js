@@ -1,8 +1,12 @@
 import React from "react";
+import { motion } from "framer-motion"
 
 export default function Home() {
     return(
-        <div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}>
             <div style={{marginLeft:"8VW",marginTop:"45VH"}}>
                 <img style={{width:"35VW"}} src={require("../images/logoName.png")}></img>
             </div>
@@ -12,6 +16,6 @@ export default function Home() {
                 marginLeft:"8VW"}}>
                 Earn your passive income with crypto now!
             </h1>
-        </div>
+        </motion.div>
     )
  }
