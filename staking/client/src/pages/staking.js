@@ -38,19 +38,19 @@ const Staking = props => {
       style={{
         backgroundColor: "#fbfcfe",
         textAlign: "center",
-        minHeight: "80vh",
+        minHeight: "79vh",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         marginTop: "5%"
       }}>
       <div style={{height: "100%", marginTop: "80px"}}>
         <div style={{
-            backgroundColor: "#1168f1",
+            backgroundColor: "#7f00cf",
             width: "620px",
             height: "170px",
             margin: "0 auto",
             top: "50%",
-            borderRadius: "24px",
+            borderRadius: "14px",
             padding: "8px"}}>
           <div 
             style={{marginBottom: "20px"}}>
@@ -125,12 +125,12 @@ const Staking = props => {
         </div>
 
         <div style={{
-          backgroundColor: "#1168f1",
+          backgroundColor: "#7f00cf",
           width: "620px",
           minHeight: "225px",
           margin: "auto",
           top: "50%",
-          borderRadius: "24px",
+          borderRadius: "14px",
           padding: "6px",
           padding: "8px",
           marginTop: "50px",

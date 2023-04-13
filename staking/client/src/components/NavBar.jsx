@@ -1,6 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
-import { AppBar, Button, Toolbar, Grid, Badge} from '@mui/material'
+import {Link, useLocation} from 'react-router-dom';
+import { AppBar, Button, Toolbar, Grid } from '@mui/material'
 import Logo from "../images/logo.png"
 
 const NavBar = props => {
@@ -27,6 +27,13 @@ const NavBar = props => {
         fontSize: "0.9VW",
         marginTop:"4VH"
     };
+    const textButtonCurrentStyle = {
+        maxWidth:"450px",
+        marginLeft:"3VW",
+        color: "#ff9900",
+        fontSize: "0.9VW",
+        marginTop:"4VH"
+    }
     const imageStyle ={
         width: "100%", 
         height: "100%",
@@ -36,7 +43,7 @@ const NavBar = props => {
         marginRight: "8VW",
         display: "inline-flex"
     }
-
+    const location = useLocation().pathname;
     return (
         <>
             <AppBar position="static" style={appbarStyle}>
@@ -52,7 +59,7 @@ const NavBar = props => {
                             to="/" 
                             sx={muiButtonSX} 
                             disableRipple 
-                            style={textButtonStyle}>
+                            style={(location==="/")?textButtonCurrentStyle:textButtonStyle}>
                             <p>Home</p>
                         </Button>
                         <Button 
@@ -60,7 +67,7 @@ const NavBar = props => {
                             to="/staking" 
                             sx={muiButtonSX} 
                             disableRipple 
-                            style={textButtonStyle}>
+                            style={(location==="/staking")?textButtonCurrentStyle:textButtonStyle}>
                             <p>Staking</p>
                         </Button>
                         {props.isConnected() ? (
@@ -68,7 +75,7 @@ const NavBar = props => {
                                 sx={muiButtonSX} 
                                 disableRipple 
                                 style={textButtonStyle}>
-                                <p>Connected</p>
+                                <p>Connected!</p>
                             </Button>
                         ) : (
                             <Button
