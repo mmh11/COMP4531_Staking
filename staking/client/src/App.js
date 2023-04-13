@@ -6,29 +6,23 @@ import Background from "./images/background.jpg"
 import NavBar from './components/NavBar'
 import Home from './pages/home'
 import Staking from './pages/staking'
-import StakeModel from './components/StakeModel'
-import { Bank, PiggyBank, Coin } from 'react-bootstrap-icons'
 
-const CONTRACT_ADDRESS = '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82'
+const CONTRACT_ADDRESS = '0x9d4454B023096f34B160D6B654540c56A1F81688'
 
 export default function App() {
-  // general
   const [provider, setProvider] = useState(undefined)
   const [signer, setSigner] = useState(undefined)
   const [contract, setContract] = useState(undefined)
   const [signerAddress, setSignerAddress] = useState(undefined)
 
-  // assets
   const [assetIds, setAssetIds] = useState([])
   const [assets, setAssets] = useState([])
 
-  // staking
   const [showStakeModel, setShowStakeModel] = useState(false)
   const [stakingLength, setStakingLength] = useState(undefined)
   const [stakingPercent, setStakingPercent] = useState(undefined)
   const [amount, setAmount] = useState(0)
 
-  // helpers
   const toWei = ether => ethers.parseEther(ether)
   const toEther = wei => ethers.formatEther(wei)
 
@@ -63,7 +57,7 @@ export default function App() {
   }
 
   const getAssetIds = async (address, signer) => {
-    const assetIds = await contract.connect(signer).getPositionIdsForAddress(address)
+    const assetIds = await contract.connect(signer).getPosAddress(address)
     return assetIds
   }
 
@@ -75,17 +69,17 @@ export default function App() {
 
   const getAssets = async (ids, signer) => {
     const queriedAssets = await Promise.all(
-      ids.map(id => contract.connect(signer).getPositionById(id))
+      ids.map(id => contract.connect(signer).getPos(id))
     )
 
     queriedAssets.map(async asset => {
       const parsedAsset = {
-        positionId: asset.positionId,
-        percentInterest: Number(asset.percentInterest) / 100,
+        posId: asset.posId,
+        interest: Number(asset.interest) / 100,
         daysRemaining: calcDaysRemaining( Number(asset.unlockDate) ),
-        etherInterest: toEther(asset.weiInterest),
-        etherStaked: toEther(asset.weiStaked),
-        open: asset.open,
+        etherInterest: toEther(asset.stakeInterest),
+        etherStaked: toEther(asset.stakeAmount),
+        start: asset.start,
       }
 
       setAssets(prev => [...prev, parsedAsset])
@@ -126,8 +120,8 @@ export default function App() {
     }
   }
 
-  const withdraw = positionId => {
-    contract.connect(signer).closePosition(positionId)
+  const withdraw = posId => {
+    contract.connect(signer).closePos(posId)
   }
 
   return (
