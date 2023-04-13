@@ -1,4 +1,3 @@
-import './App.css';
 import StakeModel from '../components/StakeModel'
 import TollIcon from '@mui/icons-material/Toll';
 import { Button } from '@mui/material'
