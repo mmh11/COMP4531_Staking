@@ -190,6 +190,7 @@ const Staking = props => {
       </div>
       {props.showStakeModel && (
         <StakeModel
+          open={props.showStakeModel}
           onClose={() => props.setShowStakeModel(false)}
           stakingLength={props.stakingLength}
           stakingPercent={props.stakingPercent}

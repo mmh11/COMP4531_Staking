@@ -1,49 +1,72 @@
 import React, { useState } from 'react';
+import { TextField, Dialog, DialogContent, Button } from '@mui/material'
 
 const StakeModel = props => {
   const {
+    open,
     onClose,
     stakingLength,
     stakingPercent,
     setAmount,
     stakeEther,
   } = props
-
+  const diaLogDivStyle={
+    width: "300px",
+    height: "250px",
+    textAlign: "center"
+  }
+  const textfieldSXStyle = {
+    "& .MuiInputBase-root": { //input text
+        color: "#6b6b6b"
+    },
+    " .MuiInputLabel-root": { //label
+        color: "#6b6b6b"
+    },
+    "& label.Mui-focused": {
+        color: "#b135ff"
+    },
+    "& .MuiOutlinedInput-root:hover": {
+        "& > fieldset": {
+          borderColor: "#b135ff",
+        }
+    },
+    "& .MuiOutlinedInput-root": {
+        "& > fieldset": { borderColor: "#b135ff" },
+        "&.Mui-focused fieldset": {
+            borderColor: "#b135ff"
+        }
+    }
+  }
   return (
     <>
-      <div className="modal-class" onClick={props.onClose}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
-          <div className="modal-body">
-            <h2 className="titleHeader">Stake ETH</h2>
-
-            <div className="row">
-              <div className="col-md-9 fieldContainer">
-                <input
-                  className="inputField"
-                  placeholder="0.0"
-                  onChange={e => props.setAmount(e.target.value)}
-                />
-              </div>
-              <div className="col-md-3 inputFieldUnitsContainer">
-                <span>ETH</span>
-              </div>
+      <Dialog open={open} onClose={onClose}>
+        <DialogContent>
+          <div style={diaLogDivStyle}>
+            <h3>Stake ETH</h3>
+            <br/>
+            <div style={{display:"inline-flex", alignItems:"center"}}>
+              <TextField 
+                sx={textfieldSXStyle}
+                id="outlined-basic" 
+                variant="outlined"
+                type='number'
+                onChange={e => props.setAmount(e.target.value)}/>
+                <p style={{marginBottom: 0}}>&nbsp;&nbsp;&nbsp;ETH</p>
             </div>
-
-            <div className="row">
-              <h6 className="titleHeader stakingTerms">{stakingLength} days @ {stakingPercent} APY</h6>
-            </div>
-            <div className="row">
-              <div
-                onClick={() => stakeEther()}
-                className="orangeButton"
-              >
+            <br/>
+            <br/>
+            <h6>{stakingLength} days @ {stakingPercent} APY</h6>
+            <br/>
+            <Button 
+              variant="contained" 
+              color="secondary"
+              style={{height:"40px", width:"60%"}}
+              onClick={() => stakeEther()}>
                 Stake
-              </div>
-            </div>
-
+            </Button>
           </div>
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

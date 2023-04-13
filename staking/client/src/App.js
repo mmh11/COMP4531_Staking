@@ -44,8 +44,6 @@ export default function App() {
 
   useEffect(() => {
     if (!showStakeModel) {
-      //  clear the amount whenever the stake model is closed
-      // console.log('stake model is closed')
       setAmount(0)
     }
   }, [showStakeModel])
