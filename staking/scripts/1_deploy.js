@@ -29,15 +29,15 @@ async function main(){
     transaction = await staking.connect(signer2).stakeEther(90, data)
     receipt = await transaction.wait()
     block = await provider.getBlock(receipt.blockNumber)
-    newUnlockDate = block.timestamp - (60*60*24*100)
-    await staking.connect(signer1).changeUnlockDate(3, newUnlockDate)
+    newUnlockDate = block.timestamp - 8640000
+    await staking.connect(signer1).changeUnlock(3, newUnlockDate)
 
     data = { value: ethers.utils.parseEther('50')}
     transaction = await staking.connect(signer2).stakeEther(180, data)
     receipt = await transaction.wait()
     block = await provider.getBlock(receipt.blockNumber)
-    newUnlockDate = block.timestamp - (60*60*24*100)
-    await staking.connect(signer1).changeUnlockDate(4, newUnlockDate)
+    newUnlockDate = block.timestamp - 8640000
+    await staking.connect(signer1).changeUnlock(4, newUnlockDate)
 }
 
 // npx hardhat run --network localhost scripts/1_deploy.js
