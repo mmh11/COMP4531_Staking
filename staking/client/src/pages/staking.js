@@ -44,7 +44,7 @@ const Staking = props => {
       }}>
       <div style={{height: "100%", marginTop: "80px"}}>
         <div style={{
-            backgroundColor: "#7f00cf",
+            backgroundColor: "#6e00b3",
             width: "620px",
             height: "170px",
             margin: "0 auto",
@@ -124,7 +124,7 @@ const Staking = props => {
         </div>
 
         <div style={{
-          backgroundColor: "#7f00cf",
+          backgroundColor: "#6e00b3",
           width: "620px",
           minHeight: "225px",
           margin: "auto",
@@ -135,7 +135,7 @@ const Staking = props => {
           marginTop: "50px",
           color: "#ffffff",
           fontWeight: 500}}>
-          <h4>Staked Assets</h4>
+          <h3>Staked Assets</h3>
           <br/>
           <div>
             <div style={{fontWeight: 800, color: "#ff9900", display:"inline-flex"}}>

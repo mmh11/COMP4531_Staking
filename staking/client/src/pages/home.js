@@ -8,7 +8,7 @@ export default function Home() {
             </div>
             <h1 style={{ 
                 fontSize: "1.5VW", 
-                color:"#7f00cf",
+                color:"#7d7d7d",
                 marginLeft:"8VW"}}>
                 Earn your passive income with crypto now!
             </h1>
