@@ -7,6 +7,8 @@ import NavBar from './components/NavBar'
 import Home from './pages/home'
 import Staking from './pages/staking'
 
+// reference: https://gist.github.com/BlockmanCodes/999d72e6a2c74e3b8c8de565e5400941
+
 const CONTRACT_ADDRESS = '0x9d4454B023096f34B160D6B654540c56A1F81688'
 
 export default function App() {
